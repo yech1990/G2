@@ -60,7 +60,7 @@ export default class Axis extends Controller<Option> {
     return 'axis';
   }
 
-  public init() {}
+  public init() { }
 
   public render() {
     this.option = this.view.getOptions().axes;
@@ -243,7 +243,7 @@ export default class Axis extends Controller<Option> {
       if (axis) {
         const cfg = coordinate.isTransposed
           ? // @ts-ignore
-            this.getLineAxisCfg(scale, xAxisOption, 'radius')
+          this.getLineAxisCfg(scale, xAxisOption, 'radius')
           : this.getCircleAxisCfg(scale, xAxisOption, direction);
 
         omit(cfg, OMIT_CFG);
@@ -272,9 +272,9 @@ export default class Axis extends Controller<Option> {
       if (grid) {
         const cfg = coordinate.isTransposed
           ? // @ts-ignore
-            this.getCircleGridCfg(scale, xAxisOption, 'radius', dim)
+          this.getCircleGridCfg(scale, xAxisOption, 'radius', dim)
           : // @ts-ignore
-            this.getLineGridCfg(scale, xAxisOption, 'circle', dim);
+          this.getLineGridCfg(scale, xAxisOption, 'circle', dim);
         omit(cfg, OMIT_CFG);
         grid.component.update(cfg);
         updatedCache.set(gridId, grid);
@@ -363,9 +363,9 @@ export default class Axis extends Controller<Option> {
           if (axis) {
             const cfg = coordinate.isTransposed
               ? // @ts-ignore
-                this.getCircleAxisCfg(scale, yAxisOption, 'circle')
+              this.getCircleAxisCfg(scale, yAxisOption, 'circle')
               : // @ts-ignore
-                this.getLineAxisCfg(scale, yAxisOption, 'radius');
+              this.getLineAxisCfg(scale, yAxisOption, 'radius');
 
             // @ts-ignore
             omit(cfg, OMIT_CFG);
@@ -395,9 +395,9 @@ export default class Axis extends Controller<Option> {
           if (grid) {
             const cfg = coordinate.isTransposed
               ? // @ts-ignore
-                this.getLineGridCfg(scale, yAxisOption, 'circle', dim)
+              this.getLineGridCfg(scale, yAxisOption, 'circle', dim)
               : // @ts-ignore
-                this.getCircleGridCfg(scale, yAxisOption, 'radius', dim);
+              this.getCircleGridCfg(scale, yAxisOption, 'radius', dim);
             omit(cfg, OMIT_CFG);
             grid.component.update(cfg);
             updatedCache.set(gridId, grid);
@@ -662,13 +662,13 @@ export default class Axis extends Controller<Option> {
    * generate axis instance by type
    * @param option
    */
-  private getAxisByType( option: AxisCfg ){
-    if(option && hasKey(option,'type')){
-      if (option.type === 'value'){
+  private getAxisByType(option: AxisCfg) {
+    if ( option && hasKey(option, 'type') ) {
+      if ( option.type === 'value' ) {
         return ValueAxis;
-      } else if (option.type === 'category'){
+      } else if ( option.type === 'category' ) {
         return CategoryAxis;
-      } else if (option.type === 'time'){
+      } else if ( option.type === 'time' ) {
         return TimeAxis;
       }
     }

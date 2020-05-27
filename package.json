@@ -22,7 +22,7 @@
     "lint:prettier": "prettier -c 'src/**/*.ts'",
     "lint:tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "jest",
-    "test-live": "DEBUG_MODE=1 jest --watch tests/unit/component/axis-type-spec.ts",
+    "test-live": "DEBUG_MODE=1 jest --watch tests",
     "coverage": "jest --coverage",
     "lib:cjs": "tsc -p tsconfig.json --target ES5 --module commonjs --outDir lib",
     "lib:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
