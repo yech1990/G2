@@ -1,6 +1,6 @@
-import { deepMix, each, get, isUndefined } from '@antv/util';
+import { deepMix, each, get, isUndefined, hasKey } from '@antv/util';
 import { COMPONENT_TYPE, DIRECTION, LAYER } from '../../constant';
-import { CircleAxis, CircleGrid, IGroup, LineAxis, LineGrid, Scale } from '../../dependents';
+import { CircleAxis, CircleGrid, IGroup, LineAxis, CategoryAxis, TimeAxis, ValueAxis, LineGrid, Scale } from '../../dependents';
 import { AxisCfg, AxisOption, ComponentOption } from '../../interface';
 
 import { DEFAULT_ANIMATE_CFG } from '../../animate/';
@@ -569,9 +569,10 @@ export default class Axis extends Controller<Option> {
     direction: DIRECTION,
     dim: string
   ): ComponentOption {
+    const AxisCtr = this.getAxisByType(option);
     // axis
     const axis = {
-      component: new LineAxis(this.getLineAxisCfg(scale, option, direction)),
+      component: new AxisCtr(this.getLineAxisCfg(scale, option, direction)),
       layer,
       // @ts-ignore
       direction: direction === 'radius' ? DIRECTION.NONE : direction,
@@ -655,6 +656,23 @@ export default class Axis extends Controller<Option> {
       grid.component.init();
       return grid;
     }
+  }
+
+  /**
+   * generate axis instance by type
+   * @param option
+   */
+  private getAxisByType( option: AxisCfg ){
+    if(option && hasKey(option,'type')){
+      if (option.type === 'value'){
+        return ValueAxis;
+      } else if (option.type === 'category'){
+        return CategoryAxis;
+      } else if (option.type === 'time'){
+        return TimeAxis;
+      }
+    }
+    return LineAxis;
   }
 
   /**

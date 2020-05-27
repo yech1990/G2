@@ -66,8 +66,8 @@ export {
 export { HtmlComponent, GroupComponent, Component, Crosshair };
 export { Annotation };
 // axis
-const { Line: LineAxis, Circle: CircleAxis } = Axis;
-export { LineAxis, CircleAxis };
+const { Line: LineAxis, Category: CategoryAxis, Time: TimeAxis, Value: ValueAxis, Circle: CircleAxis } = Axis;
+export { LineAxis, CategoryAxis, TimeAxis, ValueAxis, CircleAxis };
 // grid
 const { Line: LineGrid, Circle: CircleGrid } = Grid;
 export { LineGrid, CircleGrid };

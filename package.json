@@ -1,6 +1,6 @@
 {
   "name": "@antv/g2",
-  "version": "4.0.8",
+  "version": "4.0.9-beta.1",
   "description": "the Grammar of Graphics in Javascript",
   "main": "lib/index.js",
   "module": "esm/index.js",
@@ -22,7 +22,7 @@
     "lint:prettier": "prettier -c 'src/**/*.ts'",
     "lint:tslint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "jest",
-    "test-live": "DEBUG_MODE=1 jest --watch tests/unit",
+    "test-live": "DEBUG_MODE=1 jest --watch tests/unit/component/axis-type-spec.ts",
     "coverage": "jest --coverage",
     "lib:cjs": "tsc -p tsconfig.json --target ES5 --module commonjs --outDir lib",
     "lib:esm": "tsc -p tsconfig.json --target ES5 --module ESNext --outDir esm",
@@ -38,7 +38,7 @@
   "dependencies": {
     "@antv/adjust": "^0.2.1",
     "@antv/attr": "^0.3.1",
-    "@antv/component": "^0.6.0",
+    "@antv/component": "0.7.0-bata.1",
     "@antv/coord": "^0.3.0",
     "@antv/event-emitter": "~0.1.0",
     "@antv/g-base": "^0.4.3",

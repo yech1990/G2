@@ -1235,6 +1235,10 @@ export interface AxisGridCfg {
 /** 坐标轴配置属性，chart.axis() */
 export interface AxisCfg {
   /**
+   * 适用于直角坐标系，设置坐标轴的类型。
+   */
+  type?: 'category' | 'time' | 'value';
+  /**
    * 适用于直角坐标系，设置坐标轴的位置。
    */
   position?: 'top' | 'bottom' | 'right' | 'left';
@@ -1321,7 +1325,7 @@ export interface AxisCfg {
    *
    * 详见 {@link https://github.com/antvis/component/blob/81890719a431b3f9088e0c31c4d5d382ef0089df/src/types.ts#L127|AxisLabelCfg}
    */
-  label?: AxisLabelCfg | null;
+  label?: AxisLabelCfg | null | any;
   /** 坐标轴网格线的配置项，null 表示不展示。 */
   grid?: AxisGridCfg | null;
   /** 动画开关，默认开启。 */
