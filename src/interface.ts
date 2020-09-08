@@ -1187,7 +1187,15 @@ export interface TooltipCfg {
   /** 支持自定义模板 */
   customContent?: (title: string, data: any[]) => string | void;
 }
-
+/** chart.trendline() 接口配置属性 */
+export interface TrendLineCfg {
+  /** 回归类型 */
+  type?: 'exp' | 'linear' | 'loess' | 'log' | 'poly' | 'pow' | 'quad';
+  /** 回归线样式 */
+  style?: ShapeAttrs;
+  /** 置信区间样式 */
+  confidenceStyle?: boolean | ShapeAttrs;
+}
 /** 坐标系配置 */
 export interface CoordinateOption {
   /** 坐标系类型 */
@@ -1472,6 +1480,8 @@ export type Marker =
 export type MarkerCallback = (x: number, y: number, r: number) => PathCommand;
 /** chart.tooltip() 参数类型 */
 export type TooltipOption = TooltipCfg | boolean;
+/** chart.trendline() 参数类型 */
+export type TrendLineOption = TrendLineCfg | boolean;
 /* 筛选器函数类型定义 */
 export type FilterCondition = (value: any, datum: Datum, idx?: number) => boolean;
 /** chart.axis() 参数类型 */
