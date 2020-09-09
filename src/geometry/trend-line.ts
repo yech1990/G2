@@ -9,11 +9,10 @@ import {
 } from 'd3-regression';
 import { each, minBy, maxBy } from '@antv/util';
 import { getScale } from '@antv/scale';
-import { IGroup, IShape, Scale, Coordinate } from '../../dependents';
-import { View } from '../view';
-import { TrendLineOption, Data } from '../../interface';
-import { Controller } from './base';
-import { getSplinePath } from '../../geometry/shape/util/path';
+import { IGroup, IShape, Scale, Coordinate } from '../dependents';
+import { View } from '../chart/view';
+import { Data } from '../interface';
+import { getSplinePath } from '../geometry/shape/util/path';
 
 const REGRESSION_MAP = {
   exp: regressionExp,
@@ -25,57 +24,51 @@ const REGRESSION_MAP = {
   quad: regressionQuad,
 };
 
-export default class TrendLine extends Controller<TrendLineOption> {
+export default class TrendLine {
   protected view: View;
   protected container: IGroup;
   protected shape: IShape;
   public data: { trendlineData: any[]; confidenceData: any[] };
   protected options: Record<string, any>;
 
-  constructor(view: View) {
-    super(view);
-    this.container = this.view.backgroundGroup.addGroup();
-    // 依赖 scale
-    this.view.on('afterpaint', () => {
-      this.afterRender();
-    });
+  constructor(view: View, cfg: any) {
+    this.view = view;
+    this.container = cfg.container;
   }
 
-  public render() {}
+  public render() {
+    this.clear();
+    this.createTrendLine();
+  }
 
   public layout() {}
 
-  public update() {}
+  public update() {
+    this.initOptions();
+  }
 
-  public init() {}
+  public init() {
+    this.initOptions();
+  }
 
-  public get name(): string {
+  public get(): string {
     return 'trendline';
   }
 
-  private setOptions() {
+  private initOptions() {
     const { scales } = this.view.geometries[0].getAttribute('position');
-    const { trendline, data } = this.view.getOptions();
     const [xField, yField] = [scales[0]?.field, scales[1]?.field];
     this.options = {
-      data,
+      ...this.view.getOptions(),
       xField,
       yField,
-      ...trendline,
     };
+    const { data, lineType = 'exp' } = this.options;
     // 调用 d3 对应回归函数
-    const reg = REGRESSION_MAP[this.options.type]()
+    const reg = REGRESSION_MAP[lineType]()
       .x((d) => d[xField])
       .y((d) => d[yField]);
     this.data = this.processData(reg(data));
-  }
-
-  public afterRender() {
-    this.clear();
-    // 保存绘图属性
-    this.setOptions();
-    // 绘制趋势线
-    this.createTrendLine();
   }
 
   public createTrendLine() {
@@ -119,6 +112,7 @@ export default class TrendLine extends Controller<TrendLineOption> {
     ];
     // @ts-ignore
     const path = getSplinePath(points, false, constraint);
+
     this.shape = this.container.addShape('path', {
       attrs: {
         path,
@@ -140,22 +134,22 @@ export default class TrendLine extends Controller<TrendLineOption> {
   }
 
   public destroy() {
-    super.destroy();
     if (this.container) {
       this.container.destroy();
     }
   }
 
   private processData(data) {
-    const trendline = [];
-    const confidence = [];
+    const trendlineData = [];
+    const confidenceData = [];
+    const { confidence = 0.2 } = this.options;
     each(data, (d: [number, number]) => {
-      trendline.push({ x: d[0], y: d[1] });
+      trendlineData.push({ x: d[0], y: d[1] });
       // 设置置信上下限
-      const conf = Math.sqrt((data.rSquared * (1 - data.rSquared)) / d[1]) * 1.96;
-      confidence.push({ x: d[0], y0: d[1] - conf, y1: d[1] + conf });
+      const conf = Math.sqrt((data.rSquared * (1 - data.rSquared)) / d[1]) * confidence;
+      confidenceData.push({ x: d[0], y0: d[1] - conf, y1: d[1] + conf });
     });
-    return { trendlineData: trendline, confidenceData: confidence };
+    return { trendlineData, confidenceData };
   }
 
   private getTrendlinePoints(xScale: Scale, yScale: Scale, coord: Coordinate) {

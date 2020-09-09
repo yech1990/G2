@@ -37,7 +37,6 @@ import {
   Region,
   ScaleOption,
   TooltipOption,
-  TrendLineOption,
   ViewCfg,
   ViewPadding,
   ViewAppendPadding,
@@ -529,26 +528,6 @@ export class View extends Base {
    */
   public tooltip(cfg: boolean | TooltipOption): View {
     set(this.options, 'tooltip', cfg);
-
-    return this;
-  }
-
-  /**
-   * trendline 提示信息配置。
-   *
-   * ```ts
-   * view.trendline(false); // 关闭 trendline
-   *
-   * view.trendline({
-   *   type: 'log'
-   * });
-   * ```
-   *
-   * @param cfg trendline 配置，更详细的配置项参考：https://github.com/antvis/component
-   * @returns View
-   */
-  public trendline(cfg: boolean | TrendLineOption): View {
-    set(this.options, 'trendline', cfg);
 
     return this;
   }
